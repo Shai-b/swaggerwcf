@@ -137,6 +137,11 @@ namespace SwaggerWcf.Support
                 if (propType.IsGenericType && (propType.GetGenericTypeDefinition() == typeof(Nullable<>) || propType.GetGenericTypeDefinition() == typeof(List<>)))
                     propType = propType.GetEnumerableType();
 
+                if (propType.IsArray)
+                {
+                    propType = propType.GetEnumerableType();
+                }
+
                 string enumDescription = "";
                 List<string> listOfEnumNames = propType.GetEnumNames().ToList();
                 foreach (string enumName in listOfEnumNames)

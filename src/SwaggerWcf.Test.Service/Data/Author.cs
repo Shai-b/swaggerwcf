@@ -12,5 +12,15 @@ namespace SwaggerWcf.Test.Service.Data
 
         [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
+        public Priority[] Priorities { get; set; }
     }
+
+    public enum Priority
+    {
+        High,
+        Low
+    }
+
 }
