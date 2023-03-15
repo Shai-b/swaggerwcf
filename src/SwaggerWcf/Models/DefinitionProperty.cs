@@ -57,6 +57,8 @@ namespace SwaggerWcf.Models
 
         public decimal MultipleOf { get; set; }
 
+        public bool IsNullable { get; set; }
+
         public void Serialize(JsonWriter writer)
         {
             writer.WritePropertyName(Title);
@@ -165,6 +167,12 @@ namespace SwaggerWcf.Models
                 {
                     writer.WritePropertyName("multipleOf");
                     writer.WriteValue(MultipleOf);
+                }
+
+                if (IsNullable)
+                {
+                    writer.WritePropertyName("x-nullable");
+                    writer.WriteValue(true);
                 }
             }
 

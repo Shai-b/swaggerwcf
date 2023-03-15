@@ -213,6 +213,7 @@ namespace SwaggerWcf.Support
             ApplyIfValid(LastValidValue(attrs, a => a._MinItems), x => prop.MinItems = x.Value);
             ApplyIfValid(LastValidValue(attrs, a => a._UniqueItems), x => prop.UniqueItems = x.Value);
             ApplyIfValid(LastValidValue(attrs, a => a._MultipleOf), x => prop.MultipleOf = x.Value);
+            ApplyIfValid(LastValidValue(attrs, a => a.IsNullable), x => prop.IsNullable = x);
         }
         
         public static int GetEnumMemberValue(Type enumType, string enumName)

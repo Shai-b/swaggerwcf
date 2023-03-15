@@ -144,6 +144,8 @@ namespace SwaggerWcf.Attributes
             set { _MultipleOf = value; }
         }
 
+        public bool IsNullable { get; set; }
+
         // To be usable as attribute named parameters, parameter types must not be
         // nullable but we need to be able to see whether each value was set or not,
         // so hide a nullable value for each available option.

@@ -11,6 +11,7 @@ namespace SwaggerWcf.Test.Service.Data
         public string Id { get; set; }
 
         [DataMember]
+        [SwaggerWcfProperty(IsNullable = true)]
         public string Name { get; set; }
 
         [DataMember]
