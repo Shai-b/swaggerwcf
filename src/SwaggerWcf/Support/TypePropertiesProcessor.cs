@@ -69,7 +69,9 @@ namespace SwaggerWcf.Support
                                .Any(hiddenTags.Contains))
                 return null;
 
-            TypeFormat typeFormat = Helpers.MapSwaggerType(propertyInfo.PropertyType, null);
+            var dataType = propertyInfo.GetCustomAttribute<DataTypeAttribute>();
+            
+            TypeFormat typeFormat = Helpers.MapSwaggerType(propertyInfo.PropertyType, null, dataType);
 
             DefinitionProperty prop = new DefinitionProperty { Title = propertyInfo.Name };
 

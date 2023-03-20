@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
 using SwaggerWcf.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace SwaggerWcf.Test.Service.Data
 {

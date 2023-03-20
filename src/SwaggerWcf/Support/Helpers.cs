@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace SwaggerWcf.Support
 {
     internal static class Helpers
     {
-        public static TypeFormat MapSwaggerType(Type type, IList<Type> definitions = null)
+        public static TypeFormat MapSwaggerType(Type type, IList<Type> definitions = null, DataTypeAttribute dataTypeAttribute = null)
         {
             //built-in types
             if (type == typeof(bool))
@@ -65,6 +66,10 @@ namespace SwaggerWcf.Support
             if (type == typeof(ushort))
             {
                 return new TypeFormat(ParameterType.Integer, "uint16");
+            }
+            if (type == typeof(string) && dataTypeAttribute?.DataType == DataType.DateTime)
+            {
+                return new TypeFormat(ParameterType.String, "date-time");
             }
             if (type == typeof(string))
             {
