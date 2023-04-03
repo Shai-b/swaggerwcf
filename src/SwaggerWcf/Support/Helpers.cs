@@ -71,6 +71,10 @@ namespace SwaggerWcf.Support
             {
                 return new TypeFormat(ParameterType.String, "date-time");
             }
+            if (type == typeof(string) && dataTypeAttribute?.DataType == DataType.Duration)
+            {
+                return new TypeFormat(ParameterType.String, "duration");
+            }
             if (type == typeof(string))
             {
                 return new TypeFormat(ParameterType.String, null);
@@ -91,7 +95,6 @@ namespace SwaggerWcf.Support
             {
                 return new TypeFormat(ParameterType.String, "stream");
             }
-
             if (type == typeof(void))
             {
                 return new TypeFormat(ParameterType.Void, null);
