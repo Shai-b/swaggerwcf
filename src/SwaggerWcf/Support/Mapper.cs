@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -268,7 +269,7 @@ namespace SwaggerWcf.Support
                 }
 
                 bool isGetRequest = httpMethod == "GET";
-                int bodyParameterCount = parameters.Where(p => GetInType(uriTemplate, p.Name) == InType.Body).Count();
+                int bodyParameterCount = parameters.Count(p => GetInType(uriTemplate, p.Name) == InType.Body);
                 TypeBuilder typeBuilder = null;
                 if (!wrappedRequest && !isGetRequest && bodyParameterCount > 1)
                 {
@@ -401,9 +402,15 @@ namespace SwaggerWcf.Support
                                            IList<Type> definitionsTypesList,
                                            InType inType)
         {
-            string description = settings?.Description;
-            bool required = settings != null && settings.Required;
-            string name = inType == InType.Query ? ResolveParameterNameFromUri(uriTemplate, parameter) : parameter.Name;
+            var description = settings?.Description;
+            var required = settings != null && settings.Required;
+            var name = inType == InType.Query ? ResolveParameterNameFromUri(uriTemplate, parameter) : parameter.Name;
+            var maxLength = settings?.MaxLength ?? int.MaxValue;
+            var minLength = settings?.MinLength ?? int.MinValue;
+            var minimum = settings?.Minimum ?? int.MinValue;
+            var maximum = settings?.Maximum ?? int.MaxValue;
+            var exclusiveMinimum = settings?.ExclusiveMinimum ?? false;
+            var exclusiveMaximum = settings?.ExclusiveMaximum ?? false;
 
             if (inType == InType.Path)
                 required = true;
@@ -428,7 +435,7 @@ namespace SwaggerWcf.Support
                     Description = description,
                     In = inType,
                     Required = required,
-                    SchemaRef = typeFormat.Format
+                    SchemaRef = typeFormat.Format,
                 };
             }
 
@@ -498,7 +505,14 @@ namespace SwaggerWcf.Support
                             Description = description,
                             In = InType.Query,
                             Required = required,
-                            TypeFormat = typeFormat
+                            TypeFormat = typeFormat,
+                            MaxLength = maxLength,
+                            MinLength = minLength,
+                            Pattern = settings?.Pattern,
+                            Minimum = minimum,
+                            ExclusiveMinimum = exclusiveMinimum,
+                            Maximum = maximum,
+                            ExclusiveMaximum = exclusiveMaximum,
                         };
                         return paramPrimitive;
                     }
@@ -510,7 +524,14 @@ namespace SwaggerWcf.Support
                             Description = description,
                             In = inType,
                             Required = required,
-                            TypeFormat = typeFormat
+                            TypeFormat = typeFormat,
+                            MaxLength = maxLength,
+                            MinLength = minLength,
+                            Pattern = settings?.Pattern,
+                            Minimum = minimum,
+                            ExclusiveMinimum = exclusiveMinimum,
+                            Maximum = maximum,
+                            ExclusiveMaximum = exclusiveMaximum,
                         };
                         return paramPrimitive;
                     }
@@ -541,7 +562,14 @@ namespace SwaggerWcf.Support
                 Description = description,
                 In = inType,
                 Required = required,
-                TypeFormat = typeFormat
+                TypeFormat = typeFormat,
+                MaxLength = maxLength,
+                MinLength = minLength,
+                Pattern = settings?.Pattern,
+                Minimum = minimum,
+                ExclusiveMinimum = exclusiveMinimum,
+                Maximum = maximum,
+                ExclusiveMaximum = exclusiveMaximum,
             };
 
             return param;

@@ -77,7 +77,7 @@ namespace SwaggerWcf.Test.Service
         [SwaggerWcfResponse(HttpStatusCode.NotFound, "Book not found", true)]
         [SwaggerWcfResponse(HttpStatusCode.InternalServerError,
             "Internal error (can be forced using ERROR_500 as book id)", true)]
-        public Book ReadBook(string id)
+        public Book ReadBook(string id, decimal numberOfAuthors)
         {
             WebOperationContext woc = WebOperationContext.Current;
 

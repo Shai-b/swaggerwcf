@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using SwaggerWcf.Attributes;
@@ -28,7 +29,7 @@ namespace SwaggerWcf.Test.Service
         [WebGet(UriTemplate = "/books/{id}", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        Book ReadBook(string id);
+        Book ReadBook([SwaggerWcfParameter(MaxLength = 10, MinLength = 3, Pattern = @"/w{5}")] string id, [SwaggerWcfParameter(Maximum = 3)]decimal numberOfAuthors);
 
         [SwaggerWcfPath("Update book", "Update a book on the store")]
         [WebInvoke(UriTemplate = "/books/{id}", BodyStyle = WebMessageBodyStyle.Bare, Method = "PUT",

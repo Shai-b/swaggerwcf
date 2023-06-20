@@ -13,13 +13,23 @@ namespace SwaggerWcf.Attributes
         /// </summary>
         /// <param name="required">Set parameter as required. Defaults is false.</param>
         /// <param name="description">Parameter description.</param>
-        public SwaggerWcfParameterAttribute(bool required = false, string description = null, Type parameterType = null)
+        /// <param name="parameterType"></param>
+        /// <param name="maxLength"></param>
+        /// <param name="minLength"></param>
+        /// <param name="pattern"></param>
+        public SwaggerWcfParameterAttribute(bool required = false, string description = null ,Type parameterType = null, int maxLength = int.MaxValue, int minLength = int.MinValue, string pattern = null)
         {
             Required = required;
             Description = description;
             ParameterType = parameterType;
+            MaxLength = maxLength;
+            MinLength = minLength;
+            Pattern = pattern;
+            ExclusiveMaximum = false;
+            ExclusiveMinimum = false;
+            Maximum = int.MaxValue;
+            Minimum = int.MinValue;
         }
-
 
         /// <summary>
         ///     Defines if this parameter is required in operations
@@ -35,5 +45,20 @@ namespace SwaggerWcf.Attributes
         ///     Override parameter type
         /// </summary>
         public Type ParameterType { get; set; }
+
+        public int MaxLength { get; set; }
+
+        public int MinLength { get; set; }
+
+        public int Maximum { get; set; }
+
+        public bool ExclusiveMaximum { get; set; }
+
+        public int Minimum { get; set; }
+
+        public bool ExclusiveMinimum { get; set; }
+
+        public string Pattern { get; set; }
+        
     }
 }

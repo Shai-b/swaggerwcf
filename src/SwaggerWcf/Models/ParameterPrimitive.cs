@@ -8,8 +8,8 @@ namespace SwaggerWcf.Models
     {
         public ParameterPrimitive()
         {
-            Maximum = decimal.MaxValue;
-            Minimum = decimal.MinValue;
+            Maximum = int.MaxValue;
+            Minimum = int.MinValue;
             MaxLength = int.MaxValue;
             MinLength = int.MinValue;
             MaxItems = int.MaxValue;
@@ -27,11 +27,11 @@ namespace SwaggerWcf.Models
 
         public string Default { get; set; }
 
-        public decimal Maximum { get; set; }
+        public int Maximum { get; set; }
 
         public bool ExclusiveMaximum { get; set; }
 
-        public decimal Minimum { get; set; }
+        public int Minimum { get; set; }
 
         public bool ExclusiveMinimum { get; set; }
 
@@ -142,35 +142,44 @@ namespace SwaggerWcf.Models
                 writer.WritePropertyName("default");
                 writer.WriteValue(Default);
             }
-            if (Maximum != decimal.MaxValue)
+
+            if (TypeFormat.Type == ParameterType.Integer || TypeFormat.Type == ParameterType.Number )
             {
-                writer.WritePropertyName("maximum");
-                writer.WriteValue(Maximum);
-                writer.WritePropertyName("exclusiveMaximum");
-                writer.WriteValue(ExclusiveMaximum);
+                if (Maximum != int.MaxValue)
+                {
+                    writer.WritePropertyName("maximum");
+                    writer.WriteValue(Maximum);
+                    writer.WritePropertyName("exclusiveMaximum");
+                    writer.WriteValue(ExclusiveMaximum);
+                }
+                if (Minimum != int.MinValue)
+                {
+                    writer.WritePropertyName("minimum");
+                    writer.WriteValue(Minimum);
+                    writer.WritePropertyName("exclusiveMinimum");
+                    writer.WriteValue(ExclusiveMinimum);
+                }
             }
-            if (Minimum != decimal.MinValue)
+
+            if (TypeFormat.Type == ParameterType.String)
             {
-                writer.WritePropertyName("minimum");
-                writer.WriteValue(Minimum);
-                writer.WritePropertyName("exclusiveMinimum");
-                writer.WriteValue(ExclusiveMinimum);
+                if (MaxLength != int.MaxValue)
+                {
+                    writer.WritePropertyName("maxLength");
+                    writer.WriteValue(MaxLength);
+                }
+                if (MinLength != int.MinValue)
+                {
+                    writer.WritePropertyName("minLength");
+                    writer.WriteValue(MinLength);
+                }
+                if (!string.IsNullOrWhiteSpace(Pattern))
+                {
+                    writer.WritePropertyName("pattern");
+                    writer.WriteValue(Pattern);
+                }
             }
-            if (MaxLength != int.MaxValue)
-            {
-                writer.WritePropertyName("maxLength");
-                writer.WriteValue(MaxLength);
-            }
-            if (MinLength != int.MinValue)
-            {
-                writer.WritePropertyName("minLength");
-                writer.WriteValue(MinLength);
-            }
-            if (!string.IsNullOrWhiteSpace(Pattern))
-            {
-                writer.WritePropertyName("pattern");
-                writer.WriteValue(Pattern);
-            }
+
             if (MaxItems != int.MaxValue)
             {
                 writer.WritePropertyName("maxItems");
